@@ -421,7 +421,29 @@ int main()
     ll t;
     cin >> t;
     while(t--){
+<<<<<<< Updated upstream
       
     } 
+=======
+        ll n;
+        vector<ll>a(n);
+        ll ct=0;
+        for(int i=0;i<n;i++){
+            cin >> a[i];
+        }
+        if(n<3){
+            cout << "0" << endl;
+        }
+        else{
+            sort(a.begin(),a.end());
+            for(int i=0;i<n-2;i++){
+                if(a[i]+a[i+1]>a[i+2]){
+                    ct++;
+                }
+            }
+        }
+
+    }
+>>>>>>> Stashed changes
     return 0;
 }
