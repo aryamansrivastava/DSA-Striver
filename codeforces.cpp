@@ -421,13 +421,7 @@ int main()
     ll t;
     cin >> t;
     while(t--){
-       ll h,w,xa,ya,xb,yb;
-       cin >> h >> w >> xa >> ya >> xb >> yb;
-       while(xa<=h && ya<=w && ya>0 && xb>0 && yb>0 && yb<=w){
-           xa+=1;
-           xb-=1;
-           ya
-       }
+       
     } 
     return 0;
 }
