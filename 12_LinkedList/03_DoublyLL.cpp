@@ -49,6 +49,16 @@ void print(Node* head) {
         }
 }
 
+int findLength(Node* &head ) {
+        int len = 0;
+        Node* temp = head;
+        while(temp != NULL) {
+                temp = temp->next;
+                len++;
+        }
+        return len;
+}
+
 //I want to insert a node right at the head of Doubly Linked List
 void insertAtHead(Node* &head, Node* &tail, int data) {
         //check for Empty LL
@@ -88,16 +98,6 @@ void insertAtTail(Node* &head, Node* &tail, int data) {
         newNode -> prev = tail;
         //step4: update tail
         tail = newNode;
-}
-
-int findLength(Node* &head ) {
-        int len = 0;
-        Node* temp = head;
-        while(temp != NULL) {
-                temp = temp->next;
-                len++;
-        }
-        return len;
 }
 
 void insertAtPosition(Node* &head, Node* &tail, int data, int position) {
@@ -313,7 +313,6 @@ int main() {
         vector<int> arr = {12,5,8,6};
         Node* head = convertArr2DLL(arr);
         print(head);
-
 
 
         insertAtHead(head,tail, 101);
