@@ -1,6 +1,6 @@
 // Doubly Linked List
 
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
 class Node {
@@ -10,16 +10,17 @@ class Node {
         Node* prev;
 
         // Constructor to create a Node
-
-        Node() { 
-                this->data = 0;
-                this->prev = NULL;
-                this->next = NULL;
+        public:
+        Node(int data1, Node* next1, Node* prev1) { 
+                data = data1;
+                next = next1;
+                prev = prev1;
         }
-        Node(int data) {
-                this->data = data;
-                this->prev = NULL;
-                this->next = NULL;
+        public:
+        Node(int data1) {
+                data = data1;
+                next = NULL;
+                prev = NULL;
         }
 
         //TO DO: Write a destructor to delete a node
@@ -28,6 +29,25 @@ class Node {
                 cout << "Node with value: " << this->data << " deleted" << endl;
         }
 };
+
+Node* convertArr2DLL(vector<int> arr) {
+    Node* head = new Node(arr[0]); 
+    Node* prev = head;             
+    for (int i = 1; i < arr.size(); i++) {
+        Node* temp = new Node(arr[i], nullptr, prev);
+        prev->next = temp;    
+        prev = temp;         
+     }
+    return head;  
+}
+
+void print(Node* head) {
+        Node* temp = head;
+        while(temp != NULL) {
+                cout << temp->data << " ";
+                temp = temp->next;
+        }
+}
 
 //I want to insert a node right at the head of Doubly Linked List
 void insertAtHead(Node* &head, Node* &tail, int data) {
@@ -68,15 +88,6 @@ void insertAtTail(Node* &head, Node* &tail, int data) {
         newNode -> prev = tail;
         //step4: update tail
         tail = newNode;
-}
-
-void print(Node* head) {
- 
-        Node* temp = head;
-        while(temp != NULL) {
-                cout << temp->data << " ";
-                temp = temp->next;
-        }
 }
 
 int findLength(Node* &head ) {
@@ -254,7 +265,6 @@ void deleteFromPos(Node* &head, Node* &tail, int position) {
         curr -> next = NULL;
         curr ->prev = NULL;
         delete curr;
-
 }
 
 // Node* reverse(Node* prev, Node* &curr) {
@@ -300,21 +310,11 @@ void deleteFromPos(Node* &head, Node* &tail, int position) {
 
 int main() {
 
-        Node* first = new Node(10);
-        Node* second = new Node(20);
-        Node* third = new Node(30);
-        Node* head = first;
-        Node* tail = third;
-        
-        //Creation of a doubly Linked List
-        first -> next = second;
-        second -> prev = first;
+        vector<int> arr = {12,5,8,6};
+        Node* head = convertArr2DLL(arr);
+        print(head);
 
-        second ->next = third;
-        third->prev = second;
 
-        // print(first);
-        // cout << endl;
 
         insertAtHead(head,tail, 101);
 
