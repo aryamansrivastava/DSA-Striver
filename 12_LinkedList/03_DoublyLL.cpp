@@ -7,20 +7,20 @@ class Node {
         public:
         int data;
         Node* next;
-        Node* prev;
+        Node* back;
 
         // Constructor to create a Node
         public:
-        Node(int data1, Node* next1, Node* prev1) { 
+        Node(int data1, Node* next1, Node* back1) { 
                 data = data1;
                 next = next1;
-                prev = prev1;
+                back = back1;
         }
         public:
         Node(int data1) {
                 data = data1;
                 next = NULL;
-                prev = NULL;
+                back = NULL;
         }
 
         //TO DO: Write a destructor to delete a node
@@ -59,212 +59,173 @@ int findLength(Node* &head ) {
         return len;
 }
 
-//I want to insert a node right at the head of Doubly Linked List
-void insertAtHead(Node* &head, Node* &tail, int data) {
-        //check for Empty LL
-        if(head == NULL) {
-            Node* newNode = new Node(data);
-            head = newNode;
-            tail = newNode;
+Node* deleteHead(Node* head){
+        // LL is empty or just have Single node
+        if(head==nullptr || head->next==NULL){
+                return NULL;
         }
-        else {
-            // LL is Non Empty
-            //step1: create a node
-            Node* newNode = new Node(data);
-            //step2:
-            newNode -> next = head;
-            //step3:
-            head->prev = newNode;
-            //step3: update head
-            head = newNode;
-        }
+        Node* prev = head;
+        head = head->next;
+
+        head->back = nullptr;
+        prev->next = nullptr;
+
+        delete prev;
+        return head;
 }
 
-//I want to insert a node right at the end of Doubly LINKED LIST
-void insertAtTail(Node* &head, Node* &tail, int data) {
-        if(tail == NULL) {
+Node* deleteTail(Node* head){
+        // LL is empty or just have Single node
+        if(head==nullptr || head->next==NULL){
+                return NULL;
+        }
+        Node* tail = head;
+        while(tail->next!=NULL){
+                tail=tail->next;
+        }
+        Node* newTail = tail->back;
+        newTail->next = nullptr;
+        tail->back = nullptr;
+        delete tail;
+        return head;
+}
+
+Node* deleteFromPos(Node* head, int position) {
+        int length = findLength(head);
+        if(position>length){
+                cout << "Enter a valid Position " << endl;
+        }
+        if(head == NULL) {
+                cout << "Linked list is empty";
+        }
+        int cnt=0;
+        Node* kNode = head = head;
+        while(kNode != NULL){
+                cnt++;
+                if(cnt==position) break;
+                kNode = kNode->next;
+        }
+        Node* prev = kNode->back;
+        Node* front = kNode->next;
+
+        if(prev == NULL && front == NULL){
+                return NULL;
+        }
+        else if(prev == NULL){
+                return deleteHead(head);
+        }
+        else if(front==NULL){
+                return deleteTail(head);
+        }
+        prev->next = front;
+        front->back = prev;
+
+        kNode->next=nullptr;
+        kNode->back=nullptr;
+        delete kNode;
+        return head;
+}
+
+void deleteNode(Node* temp) {
+        Node* prev = temp->back;
+        Node* front = temp->next;
+
+        if(front==NULL){
+                prev->next = nullptr;
+                temp->back = nullptr;
+                free(temp);
+                return;
+        }
+        prev->next = front;
+        front->back = prev;
+
+        temp->next = temp->back = nullptr;
+        free(temp);
+}
+
+//I want to insert a node right before the head of Doubly Linked List
+Node* insertBeforeHead(Node* &head, int data) {
+        Node* newHead;
+        // empty DLL pe kaam nhi kar raha
+        //check for Empty LL
+        if(head == NULL) {
+            newHead = new Node(data);
+            head = newHead;
+        }
+        else {
+        // LL is Non Empty
+        // created a new head with next pointing to head and back pointing to null
+            newHead = new Node(data,head,nullptr);
+            head->back = newHead;
+        }
+        return newHead;
+}
+
+//I want to insert a node right before the end of Doubly LINKED LIST
+Node* insertBeforeTail(Node* head, int data) {
+        if(head == NULL) {
             // LL is Empty
             Node* newNode = new Node(data);
             head = newNode;
-            tail = newNode;
-            return;
         }
-        // LL is Not Empty
-        //step1: create a node
-        Node* newNode = new Node(data);
-        //step2: 
+        // contains single node
+        if(head->next==NULL){
+                return insertBeforeHead(head,data);
+        }
+        //else
+        Node* tail=head;
+        while(tail->next!=NULL){
+                tail=tail->next;
+        }
+        Node* prev = tail->back;
+        Node* newNode = new Node(data,tail,prev);
+        prev->next = newNode;
+        tail->back = newNode;
+        return head;
+}
+
+Node* insertAfterTail(Node* head, int data){
+        if(head==NULL){
+                return new Node(data);
+        }
+        Node* tail = head;
+        while(tail->next!=NULL){
+                tail=tail->next;
+        }
+        Node* prev = tail;
+        Node* newNode = new Node(data,nullptr,prev);
+        prev->next = newNode;
         tail->next = newNode;
-        //step3:
-        newNode -> prev = tail;
-        //step4: update tail
-        tail = newNode;
+        return head;
 }
 
-void insertAtPosition(Node* &head, Node* &tail, int data, int position) {
-    // Check empty LL
-    if(head == NULL && tail==NULL){
-        Node* newNode = new Node(data);  
-        head  = newNode;
-        tail = newNode;
-        return;
-    }
-
-    // Edge cases handle kiya hai ye (jab (zeroth) ya (>=length of LL) position par insertion hoga)
-    if(position == 0) {
-        insertAtHead(head, tail , data);
-        return;
-    }
-
-    int len = findLength(head);     
-    if(position > len) {
-        insertAtTail(head, tail, data);
-        return;
-    }
-
-    // Insertion in Middle
-    // Step 1: find the position of: previous and current pointer
-
-    int i = 1;
-    Node* prevNode = head;
-    while(i < position - 1){
-        prevNode = prevNode->next;
-        i++;
-    }
-
-    Node* curr = prevNode -> next;
-
-    // Step 2: Create a node 
-    Node* newNode = new Node(data);
-
-    // Step 3: 
-    prevNode -> next = newNode;
-    newNode -> prev = prevNode;
-    curr -> prev = newNode;
-    newNode -> next = curr;
-
-}
-
-void deleteNode(int position, Node* &head, Node* &tail) {
-        if(head == NULL) {
-                cout << "Cannot delete, LL is empty";
-                return;
+Node* insertBeforeKthElement(Node* head, int data, int k) {
+        int length = findLength(head);
+        if(k==1){
+                return insertBeforeHead(head, data);
         }
-
-        // deleting first node
-        if(position == 1) {
-                Node* temp = head;
-                head = head -> next;
-                temp -> next = NULL;
-                delete temp;
-                return;
+        else if(k>length){
+                return insertAfterTail(head, data);
         }
-
-        int len  = findLength(head);
-
-        // Deleting last node
-
-        if(position == len) {
-                // find prev
-                int i = 1;
-                Node* prev = head;
-                while(i < position - 1) {
-                        prev = prev->next;
-                        i++;
-                }
-                // step2:
-                Node* temp = tail;
-
-                // step3:
-                prev->next = NULL;
-
-                // step4:
-                tail = prev;
-
-                // step5:
-                delete temp;
-                return;
+        Node* temp = head;
+        int cnt=0;
+        while(temp!=NULL){
+                cnt++;
+                if(cnt==k) break;
+                temp = temp->next;
         }
+        Node* prev = temp->back;
+        Node* newNode = new Node(data,temp,prev);
+        prev->next = newNode;
+        temp->back = newNode;
+        return head;    
+} 
 
-        // Deleting middle node
-
-        // Step 1 : find prev and curr
-        int i = 1;
-        Node* prev = head;
-        while( i < position-1) {
-                prev = prev -> next;
-                i++;
-        }
-        Node* curr = prev -> next;
-
-        // Step2:
-        prev -> next = curr -> next;
-
-        // Step3:
-        curr -> next = NULL;
-
-        // Step4:
-        delete curr;
-}
-
-void deleteFromPos(Node* &head, Node* &tail, int position) {
-        if(head == NULL) {
-                cout << "Linked list is empty";
-                return;
-        }
-        if(head -> next == NULL) {
-                //single node
-                Node* temp = head;
-                head = NULL;
-                tail = NULL;
-                delete temp;
-                return;
-        }
-        int len = findLength(head);
-        if(position > len) {
-                cout << "please enter a valid position " << endl;
-                return;
-        }
-
-        if(position == 1) {
-                //want to delete the first node
-                Node* temp = head;
-                head = head ->next;
-                head -> prev = NULL;
-                temp ->next = NULL;
-                delete temp;
-                return;
-        }
-        
-        if(position == len) {
-                //delete last node
-                Node* temp = tail;
-                tail = tail -> prev;
-                temp -> prev = NULL;
-                tail ->next = NULL;
-                delete temp;
-                return;
-        }
-
-        //delete from middle of linked list
-
-        //step1: find left, curr, right
-        int i = 1;
-        Node* left = head;
-        while( i < position - 1) {
-                left = left -> next;
-                i++;
-        }
-        Node* curr = left -> next;
-        Node* right = curr -> next;
-
-        //step2:
-        left -> next = right;
-        //step3:
-        right -> prev = left;
-        //step4:
-        curr -> next = NULL;
-        curr ->prev = NULL;
-        delete curr;
+void insertBeforeNode(Node* node, int data){
+        Node* prev = node->back;
+        Node* newNode = new Node(data, node, prev);
+        prev->next = newNode;
+        node->back = newNode;
 }
 
 // Node* reverse(Node* prev, Node* &curr) {
@@ -277,7 +238,6 @@ void deleteFromPos(Node* &head, Node* &tail, int position) {
 //         //1 case solve then recursion will take care
 //         Node* forward = curr -> next;
 //         curr -> next = prev;
-
 //         reverse(curr, forward);
 // }
 
@@ -310,31 +270,20 @@ void deleteFromPos(Node* &head, Node* &tail, int position) {
 
 int main() {
 
-        vector<int> arr = {12,5,8,6};
+        vector<int> arr = {12,5,8,6,18};
         Node* head = convertArr2DLL(arr);
+        Node* tail = new Node(arr[4]);
+
+        // head = deleteHead(head);
+        // head = deleteTail(head);
+        // head = deleteFromPos(head,4);
+        // deleteNode(head->next->next->next->next);
+        // head = insertBeforeHead(head,15);
+        // head = insertBeforeTail(head,10);
+        // head = insertAfterTail(head,10);
+        // head = insertBeforeKthElement(head,15,6);
+        insertBeforeNode(head->next->next,100);
         print(head);
-
-
-        insertAtHead(head,tail, 101);
-
-        print(head);
-        cout << endl;
-
-        insertAtTail(head,tail, 50);
-
-        print(head);
-        cout << endl;
-
-        insertAtPosition(head,tail, 401, 5);
-
-        print(head);
-        cout << endl;
-  
-        // deleteFromPos(head, tail, 10);
-
-        // cout << endl;
-        // print(head);
-        // cout << endl;
 
     return 0;
 }
