@@ -421,21 +421,8 @@ int main()
     ll t;
     cin >> t;
     while(t--){
-        ll n;
-        cin >> n;
-        vector<int> a(n), freq(n+1);
-        for(int i=0;i<n;i++){
-            cin >> a[i];
-            freq[a[i]]++;
-        }
-        ll ans=0;
-        ll smaller=0;
-        for(int i=0;i<=n;i++){
-            ans+= 1LL*freq[i]*(freq[i]-1)*(freq[i]-2)/6;
-            ans+= 1LL*freq[i]*(freq[i]-1)/2*smaller;
-            smaller += freq[i];
-        }
-        cout << ans << endl;
-    } 
-    return 0;
-}
+      
+
+
+    }
+} 
