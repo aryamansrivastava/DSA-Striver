@@ -285,10 +285,8 @@
 //     return 0;
 // }
 
-
-
 // isko samajhna hai tle eliminators se
-//matching arrays 
+// matching arrays
 // #include <bits/stdc++.h>
 // using namespace std;
 // #define ll long long
@@ -325,20 +323,20 @@
 
 //         vector<int> ans(n);
 //         int f = 1;
- 
+
 //         for(int i=x; i>0; i--)
 //         {
 //             ans[vp[n-i].ss] = b[x-i];
 //             f &= (ans[vp[n-i].ss] < a[vp[n-i].ss]);
 //         }
- 
+
 //         for(int i=x+1, j=0; i<=n; i++, j++)
 //         {
 //             ans[vp[j].ss] = b[x+j];
 //             f &= (ans[vp[j].ss] >= a[vp[j].ss]);
 //         }
 
-//         if(f)      
+//         if(f)
 //         {
 //             cout<<"YES\n";
 //             for(auto e: ans)   cout<<e<<" ";
@@ -361,7 +359,7 @@
 // {
 //     ios_base::sync_with_stdio(false);
 //     cin.tie(NULL);
-    
+
 //     ll t;
 //     cin >> t;
 //     while(t--){
@@ -420,9 +418,36 @@ int main()
 
     ll t;
     cin >> t;
-    while(t--){
-      
+    while (t--)
+    {
+        ll n,m,k;
+        cin >> n >> m >> k;
+        vector<ll> a(n),b(n);
+        set<ll>s1,s2,s3;
 
+        sort(a.begin(),a.end());
+        sort(b.begin(),b.end());
 
+        for(int i=0;i<n;i++){
+            cin >> a[i];
+            if(a[i]<=k){
+               s1.insert(a[i]);
+               s3.insert(a[i]);
+            }
+        }
+        for(int i=0;i<m;i++){
+            cin >> b[i];
+            if(b[i]<=k){
+               s2.insert(b[i]);
+               s3.insert(b[i]);
+            }
+        }
+
+        if(s1.size()>=k/2 && s2.size()>=k/2 && s3.size()>=k){
+            cout << "YES" << endl;
+        }
+        else{
+            cout << "NO" << endl;
+        }   
     }
-} 
+}
