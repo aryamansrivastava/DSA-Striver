@@ -11,9 +11,11 @@ using namespace std;
 3. If the question asks all the ways, sum up all the stuffs
    If the question asks for the minimum, take minimum of all the stuffs */
 
+// to reach the nth stair, you find out the ways to reach the (n-1)th stair (from where you take 1 step to reach nth stair) 
+// and the ways to reach the (n-2)th stair (from where you take 2 steps to reach the nth stair), and sum them to get total no. of ways
 
 int solveR(int n) {
-    if(n<=2) {
+    if(n<=2) { 
         return n;
     }
     return solveR(n-1) + solveR(n-2);

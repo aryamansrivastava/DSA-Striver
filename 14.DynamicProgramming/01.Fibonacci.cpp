@@ -1,6 +1,7 @@
+// Link: https://leetcode.com/problems/fibonacci-number/
+
 #include <bits/stdc++.h>
 using namespace std;
-
 
 //Step 1
 //brute force - Recursion approach - O(2^n) & O(n)
@@ -17,17 +18,18 @@ int main(){
 	cout<<fib(n);
 }
 
+
 //------------------------------------------------------------------------------------------------------->
 
 //Step 2
-//Memoization Approach  - O(n) & O(n) -> Requirement <-> Base
+//Memoization Approach -> TC and SC => O(n) & O(2*n) -> problem is solved in the direction of the main problem to the base cases.
 
 int fib(int n, vector<int>&dp){
     //base case
 	if (n <= 1){
 		return n;
 	}
-    //memoizattion condition
+    //memoization condition
 	if (dp[n] != -1){
 		return dp[n];
 	}
@@ -44,15 +46,14 @@ int main(){
 //-------------------------------------------------------------------------------------------------------->
 
 //Step 3
-//Tabulation Approach - O(n) & O(n) -> base case to requirement
-
+//Tabulation Approach - O(n) & O(n) -> Base case to main problem
 
 int fib(int n, vector<int>&dp){
 	
 	dp[0] = 0;
 	dp[1] = 1;
 
-	for (int i = 2; i <= n; ++i){
+	for (int i = 2; i <= n; ++i){ 
 		dp[i] = dp[i-1] + dp[i-2];
 	}
 
@@ -65,11 +66,11 @@ int main(){
 	cout<<fib(n, dp);
 }
 
+
 //-------------------------------------------------------------------------
 
 //Step 4
 //Space Optimized - O(n) & O(1)
-
 
 
 int fib(int n){

@@ -293,8 +293,8 @@
 // #define mod 1000000007
 // #define all(x) x.begin(),x.end()
 // #define pb push_back
-// #define ff   first
-// #define ss   second
+// #define ff  first
+// #define ss  second
 
 // int main(){
 //     ios_base::sync_with_stdio(false);
@@ -406,10 +406,19 @@
 
 
 
+
+
+
+
+
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long
 #define mod 1000000007
+#define all(x) x.begin(),x.end()
+#define pb push_back
+#define ff  first
+#define ss  second
 
 int main()
 {
@@ -420,34 +429,39 @@ int main()
     cin >> t;
     while (t--)
     {
-        ll n,m,k;
-        cin >> n >> m >> k;
-        vector<ll> a(n),b(n);
-        set<ll>s1,s2,s3;
-
-        sort(a.begin(),a.end());
-        sort(b.begin(),b.end());
-
-        for(int i=0;i<n;i++){
-            cin >> a[i];
-            if(a[i]<=k){
-               s1.insert(a[i]);
-               s3.insert(a[i]);
-            }
+      ll n,m;
+      cin >> n >> m;
+      vector<ll>a(n),b(n);
+      ll pro=1;
+      for(int i=0;i<n;i++){
+        cin >> a[i];
+        pro*=a[i];
+      }
+      b.push_back(pro%m);
+      string s;
+      cin >> s;
+      ll i=0,j=n-1;
+      ll pro1=1;
+      while(i<n && j>=0){
+        pro1=1;
+        if(s[i]=='L'){
+          i++;
+          for(int k=i;k<=j;k++){
+            pro1*=a[k];
+          }
+          b.push_back(pro1%m);
         }
-        for(int i=0;i<m;i++){
-            cin >> b[i];
-            if(b[i]<=k){
-               s2.insert(b[i]);
-               s3.insert(b[i]);
-            }
+        else if(s[i]=='R'){
+          j--;
+          for(int k=i;k<=j;k++){
+            pro1*=a[k];
+          }
+          b.push_back(pro1%m);
         }
-
-        if(s1.size()>=k/2 && s2.size()>=k/2 && s3.size()>=k){
-            cout << "YES" << endl;
-        }
-        else{
-            cout << "NO" << endl;
-        }   
+      }
+      for(int i=0;i<n;i++){
+        cout << b[i] << " ";
+      }
+      cout << endl;
     }
 }
