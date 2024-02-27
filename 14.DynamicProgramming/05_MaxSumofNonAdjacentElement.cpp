@@ -1,4 +1,4 @@
-// Author: REET
+
 // Problem: Maximum Sum of Non Adjacent Element
 // Link: https://leetcode.com/problems/house-robber/
 
@@ -97,11 +97,3 @@ int main() {
 
     return 0;
 }
-
-/*
-Output of the program: 
-11
-11
-11
-11
-*/

@@ -406,11 +406,6 @@
 
 
 
-
-
-
-
-
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long
@@ -431,37 +426,23 @@ int main()
     {
       ll n,m;
       cin >> n >> m;
-      vector<ll>a(n),b(n);
-      ll pro=1;
+      vector<ll>a(n), zeroes;
       for(int i=0;i<n;i++){
         cin >> a[i];
-        pro*=a[i];
       }
-      b.push_back(pro%m);
-      string s;
-      cin >> s;
-      ll i=0,j=n-1;
-      ll pro1=1;
-      while(i<n && j>=0){
-        pro1=1;
-        if(s[i]=='L'){
-          i++;
-          for(int k=i;k<=j;k++){
-            pro1*=a[k];
-          }
-          b.push_back(pro1%m);
-        }
-        else if(s[i]=='R'){
-          j--;
-          for(int k=i;k<=j;k++){
-            pro1*=a[k];
-          }
-          b.push_back(pro1%m);
-        }
+      for(auto &i: a){
+        int ten=0,dig=0;
+        while(i%10==0) ten++, i/=10;
+        while(i) dig++, i/=10;
+
+        m-=dig;
+        zeroes.pb(ten);
       }
-      for(int i=0;i<n;i++){
-        cout << b[i] << " ";
+      sort(zeroes.begin(),zeroes.end());
+      reverse(zeroes.begin(),zeroes.end());
+      for(int i=1;i<zeroes.size();i+=2){
+        m-=zeroes[i];
       }
-      cout << endl;
+      cout << (m<0 ? "Sasha" : "Anna") << endl;
     }
 }

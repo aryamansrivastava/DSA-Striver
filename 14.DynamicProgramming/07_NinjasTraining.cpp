@@ -1,3 +1,4 @@
+
 // Problem: Ninja's Training
 // Link: https://www.codingninjas.com/codestudio/problems/ninja-s-training_3621003
 
@@ -27,7 +28,8 @@ int solveM(int day, int last, vector<vector<int>> &points, vector<vector<int>> &
     int maxi = 0;
     for(int task=0; task<3; task++) {
         if(task!=last) {
-            maxi = max(maxi, points[day][task]+solveM(day-1, task, points, dp));
+            int point = points[day][task]+solveM(day-1,task,points,dp);
+            maxi=max(maxi,point);
         }
     }
     
@@ -51,7 +53,8 @@ int solveT(int n, vector<vector<int>> &points) {
             int maxi = 0;
             for(int task=0; task<3; task++) {
                 if(task!=last) {
-                    maxi = max(maxi, points[day][task]+dp[day-1][task]);            
+                    int point = points[day][task]+dp[day-1][task];
+                    maxi = max(maxi, point);            
                 }
             }
             dp[day][last] = maxi;
@@ -66,11 +69,11 @@ int solveT(int n, vector<vector<int>> &points) {
 // Space Complexity: O(1)
 // Reason: Dp Array O(1)
 int solveS(int n, vector<vector<int>> &points) {
-    vector<int> dp(4);
-    dp[0] = max(points[0][1], points[0][2]);
-    dp[1] = max(points[0][0], points[0][2]);
-    dp[2] = max(points[0][0], points[0][1]);
-    dp[3] = max(points[0][0], max(points[0][1], points[0][2]));
+    vector<int> prev(4);
+    prev[0] = max(points[0][1], points[0][2]);
+    prev[1] = max(points[0][0], points[0][2]);
+    prev[2] = max(points[0][0], points[0][1]);
+    prev[3] = max(points[0][0], max(points[0][1], points[0][2]));
     
     for(int day=1; day<n; day++) {
         vector<int> tmp(4);
@@ -78,14 +81,14 @@ int solveS(int n, vector<vector<int>> &points) {
             int maxi = 0;
             for(int task=0; task<3; task++) {
                 if(task!=last) {
-                    maxi = max(maxi, points[day][task]+dp[task]); 
+                    maxi = max(maxi, points[day][task]+prev[task]); 
                 }
             }
             tmp[last] = maxi;
         }
-        dp = tmp;
+        prev = tmp;
     }
-    return dp[3]; 
+    return prev[3]; 
 }
 
 int main() {
