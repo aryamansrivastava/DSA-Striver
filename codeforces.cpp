@@ -406,6 +406,8 @@
 
 
 
+
+
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long
@@ -424,25 +426,6 @@ int main()
     cin >> t;
     while (t--)
     {
-      ll n,m;
-      cin >> n >> m;
-      vector<ll>a(n), zeroes;
-      for(int i=0;i<n;i++){
-        cin >> a[i];
-      }
-      for(auto &i: a){
-        int ten=0,dig=0;
-        while(i%10==0) ten++, i/=10;
-        while(i) dig++, i/=10;
-
-        m-=dig;
-        zeroes.pb(ten);
-      }
-      sort(zeroes.begin(),zeroes.end());
-      reverse(zeroes.begin(),zeroes.end());
-      for(int i=1;i<zeroes.size();i+=2){
-        m-=zeroes[i];
-      }
-      cout << (m<0 ? "Sasha" : "Anna") << endl;
+       
     }
 }
