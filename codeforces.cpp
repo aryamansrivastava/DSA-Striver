@@ -406,6 +406,33 @@
 
 
 
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define ll long long
+// #define mod 1000000007
+// #define all(x) x.begin(),x.end()
+// #define pb push_back
+// #define ff  first
+// #define ss  second
+
+// int main()
+// {
+//     ios_base::sync_with_stdio(false);
+//     cin.tie(NULL);
+
+//     ll t;
+//     cin >> t;
+//     while (t--)
+//     {
+//         ll n,l;
+//         cin >> n >> l;
+//         vector<int>a(n),b(n);
+//         for(int i=0;i<n;i++){
+//             cin >> a[i] >> b[i];
+//         }
+        
+//     }
+// }
 
 
 #include <bits/stdc++.h>
@@ -426,6 +453,19 @@ int main()
     cin >> t;
     while (t--)
     {
-       
+        ll n;
+        cin >> n;
+        string s;
+        cin >> s;
+        string a = s;
+        // string x="";
+        reverse(s.begin(),s.end());
+        string x = s;
+        if(a[0]<=a[a.size()-1]){
+            cout << a << endl;
+        }
+        else{
+            cout << x+a << endl;
+        }
     }
 }
