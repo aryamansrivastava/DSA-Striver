@@ -1,5 +1,4 @@
 #include<bits/stdc++.h>
-#include<iostream>
 using namespace std;
 struct Node{
     int data;
@@ -25,7 +24,7 @@ Why?
 After some iterations, these "d" will be 0 and both fast and slow will meet at a common node.
 */
 
-bool hasCycle(Node *head) {
+bool detectCycle(Node *head) {
     bool cycleFound = false;
     Node* slow = head;
     Node* fast = head;
@@ -43,6 +42,36 @@ bool hasCycle(Node *head) {
 }
 
 int main(){
-    // No main since we cannot make a Linked List by self having a cycle.
-    // Or it will take much time to connect pointers again
+    // Create a sample linked list
+    // with a loop for testing
+    
+    Node* head = new Node(1);
+    Node* second = new Node(2);
+    Node* third = new Node(3);
+    Node* fourth = new Node(4);
+    Node* fifth = new Node(5);
+
+    head->next = second;
+    second->next = third;
+    third->next = fourth;
+    fourth->next = fifth;
+     // Create a loop
+    fifth->next = third; 
+
+    // Check if there is a loop 
+    // n the linked list
+    if (detectCycle(head)) {
+        cout << "Loop detected in the linked list." << endl;
+    } else {
+        cout << "No loop detected in the linked list." << endl;
+    }
+
+    // Clean up memory (free the allocated nodes)
+    delete head;
+    delete second;
+    delete third;
+    delete fourth;
+    delete fifth;
+
+    return 0;
 }

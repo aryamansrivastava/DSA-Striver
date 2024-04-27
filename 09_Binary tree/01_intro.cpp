@@ -1,207 +1,27 @@
-#include<iostream>
-#include<queue>
-using namespace std;
 
-class node {
-    public:
-       int data;
-       node* left;
-       node* right;
+// Binary Tree: Tree having at max 2 childrens
 
-    node(int d) {   // constructor
-        this -> data = d;
-        this -> left = NULL;
-        this -> right = NULL;     
-    }
-};
+// Types of Binary Tree:
+// 1. Perfect BT
+// 2. Complete BT
+// 3. Full BT
+// 4. Balanced BT
+// 5. Degenerate or Skew Tree
 
-node* buildTree(node* root){
+// 1. Perfect BT: 
+// all leaf nodes are at same level.
 
-    cout << "Enter the data : " << endl; 
-    int data;
-    cin >> data;
-    root = new node(data);
-    
-    if(data == -1){
-        return NULL;
-    }
+// 2. Complete BT: 
+// i. all levels are completely filled except the last level.
+// ii. the last level has all nodes in left as possible.
 
-    cout << "Enter data for inserting in left of " << data << endl;
-    root->left = buildTree(root->left);
-    cout << "Enter data for inserting in right of " << data << endl;
-    root->right =  buildTree(root->right);
-    return root;
+// 3. Full BT: 
+// all nodes has either 0 or 2 childrens.
 
-}
+// 4. Balanced BT:
+// height of tree at max log(n), where n = no. of nodes in tree
+// Or
+// absolute difference of heights of left and right subtrees at any node is less than or equal to 1
 
-void levelOrderTraversal(node* root){
-     queue<node*> q;
-     q.push(root);
-     q.push(NULL);  //seperator
-
-     while(!q.empty()){
-        node* temp = q.front();
-        q.pop();
-
-        if(temp == NULL) { //purana level complete traverse ho chuka hai
-            cout << endl;
-            if(!q.empty()){  // queue still has some child nodes
-                q.push(NULL);  //seperator
-            }
-        }
-        else{
-            cout << temp -> data << " ";
-            if(temp -> left){
-               q.push(temp -> left);
-           }
-
-           if(temp -> right) {
-               q.push(temp -> right);
-          }
-       }
-    }
-}
-
-void InOrder(node* root){
-    // base case
-    if(root == NULL) {
-        return;
-    }
-    InOrder(root -> left);
-    cout << root -> data << " ";
-    InOrder(root -> right);
-}
-
-void PreOrder(node* root){
-    // base case
-    if(root == NULL) {
-        return;
-    }
-    cout << root -> data << " ";
-    PreOrder(root -> left);
-    PreOrder(root -> right);
-}
-
-void PostOrder(node* root){
-    // base case
-    if(root == NULL) {
-        return;
-    }
-    PostOrder(root -> left);
-    PostOrder(root -> right);
-    cout << root -> data << " ";
-}
-
-void buildFromLevelOrder(node* &root){
-    queue<node*> q;
-    cout << "Enter the data for root " << endl;
-    int data;
-    cin >> data;
-    root = new node(data);
-    q.push(root);
-
-    while(!q.empty()){
-        node* temp = q.front();
-        q.pop();
-
-        cout << "Enter left node for: " << temp->data << endl;
-        int leftData;
-        cin >> leftData;
-
-        if(leftData != -1){
-            temp -> left = new node(leftData);
-            q.push(temp->left);
-        }  
- 
-        cout << "Enter right node for: " << temp -> data << endl;
-        int rightData;
-        cin >> rightData;
-
-        if(rightData != -1){
-            temp -> right = new node(rightData);
-            q.push(temp -> right);
-        } 
-    }
-}
-
-int main(){
-
-    node* root = NULL;
-/*
-    buildFromLevelOrder(root);
-    cout << endl;
-    levelOrderTraversal(root);
-*/
-
-/*
-    //creating a tree
-    root = buildTree(root);
-
-    //Tree data
-    //  INPUT ---> 1 3 7 -1 -1 11 -1 -1 5 17 -1 -1 -1
-
-    //level order
-    cout << "Printing the Level order Traversal output " << endl;
-    levelOrderTraversal(root);
-
-    // Inorder Traversal
-    cout << "Inorder Traversal is : " ;
-    InOrder(root);
-    cout << endl;
-
-    // Preorder Traversal
-    cout << "Preorder Traversal is : " ;
-    PreOrder(root);
-    cout << endl;
-
-    // Postorder Traversal
-    cout << endl << "Postorder Traversal is : ";
-    PostOrder(root);
-
-    */
-
-return 0;
-}
-
-
-// Count Leaf Nodes Question
-
-/*
-    Following is the Binary Tree Node class structure:
-    template <typename T>
-    class BinaryTreeNode {
-      public :
-        T data;
-        BinaryTreeNode<T> *left;
-        BinaryTreeNode<T> *right;
-        BinaryTreeNode(T data) {
-                this -> data = data;
-                left = NULL;
-                right = NULL;
-        }
-    };
-    
-*/
-
-// void inorder(BinaryTreeNode<int> * root, int &count) {
-//     //base case
-//     if(root == NULL) {
-//         return ;
-//     }
-
-//     inorder(root->left, count);
-
-//     //leaf node
-//     if(root->left == NULL && root->right == NULL) {
-//         count++;
-//     }
-
-//     inorder(root->right, count);
-
-// }
-
-// int noOfLeafNodes(BinaryTreeNode<int> *root){
-    // int cnt = 0;
-    // inorder(root, cnt);
-    // return cnt;
-// }
+// 5. Degenerate(or Skew) Tree:
+// every node as only either 0 or 1 children.

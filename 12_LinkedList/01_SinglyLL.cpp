@@ -19,6 +19,16 @@ struct Node{
     }
 };
 
+int lengthOfLL(Node *head){
+    Node *current = head;
+    int len = 0;
+    while(current != NULL){
+        len++;
+        current = current->next;
+    }
+    return len;
+}
+
 void printLL(Node* head){
     Node* current = head;
     while(current!= NULL){
@@ -27,6 +37,7 @@ void printLL(Node* head){
     }
     cout<<endl;
 }
+
 Node* convertArray2LL(vector<int> arr){
     Node *head = new Node(arr[0]);
     Node *mover = head;
@@ -39,14 +50,16 @@ Node* convertArray2LL(vector<int> arr){
     return head;
 }
 
-int lengthOfLL(Node *head){
-    Node *current = head;
-    int len = 0;
-    while(current != NULL){
-        len++;
-        current = current->next;
+int checkifPresent(Node* head, int desiredElement) {
+    Node* temp = head;
+    while (temp != nullptr) {
+        // Check if the current node's data is equal to the desired element
+        if (temp->data == desiredElement)
+            return 1;  // Return 1 if the element is found
+        // Move to the next node
+        temp = temp->next;
     }
-    return len;
+    return 0; 
 }
 
 int main(){
@@ -54,5 +67,7 @@ int main(){
     Node *head = convertArray2LL(arr);
     printLL(head);
     cout<<lengthOfLL(head)<<endl;
+    int val = 7;
+    cout << checkifPresent(head,val) << endl;
     return 0;
 }

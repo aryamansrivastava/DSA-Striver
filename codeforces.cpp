@@ -424,48 +424,72 @@
 //     cin >> t;
 //     while (t--)
 //     {
-//         ll n,l;
-//         cin >> n >> l;
-//         vector<int>a(n),b(n);
-//         for(int i=0;i<n;i++){
-//             cin >> a[i] >> b[i];
+//       string s;
+//       cin >> s;
+//       int zero=0,one=0;
+//       int n = s.size();
+//       for(int i=0;i<s.size();i++){
+//         if(s[i]=='0') zero++;
+//         else if(s[i]=='1') one++;
+//       }
+//       int i=0,ind=n;
+//       while(i<n){
+//         if(s[i]=='1'  && zero>0){
+//             zero--;
 //         }
-        
+//         else if(s[i]=='0' && one>0){
+//             one--;
+//         }
+//         else{
+//             ind=i;
+//             break;
+//         }
+//         i++;
+//       }
+//       cout << n-ind << endl;
 //     }
 // }
 
 
-#include <bits/stdc++.h>
-using namespace std;
-#define ll long long
-#define mod 1000000007
-#define all(x) x.begin(),x.end()
-#define pb push_back
-#define ff  first
-#define ss  second
 
-int main()
-{
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+// Count Leaf Nodes Question
 
-    ll t;
-    cin >> t;
-    while (t--)
-    {
-        ll n;
-        cin >> n;
-        string s;
-        cin >> s;
-        string a = s;
-        // string x="";
-        reverse(s.begin(),s.end());
-        string x = s;
-        if(a[0]<=a[a.size()-1]){
-            cout << a << endl;
+/*
+    Following is the Binary Tree Node class structure:
+    template <typename T>
+    class BinaryTreeNode {
+      public :
+        T data;
+        BinaryTreeNode<T> *left;
+        BinaryTreeNode<T> *right;
+        BinaryTreeNode(T data) {
+                this -> data = data;
+                left = NULL;
+                right = NULL;
         }
-        else{
-            cout << x+a << endl;
-        }
-    }
-}
+    };
+    
+*/
+
+// void inorder(BinaryTreeNode<int> * root, int &count) {
+//     //base case
+//     if(root == NULL) {
+//         return ;
+//     }
+
+//     inorder(root->left, count);
+
+//     //leaf node
+//     if(root->left == NULL && root->right == NULL) {
+//         count++;
+//     }
+
+//     inorder(root->right, count);
+
+// }
+
+// int noOfLeafNodes(BinaryTreeNode<int> *root){
+    // int cnt = 0;
+    // inorder(root, cnt);
+    // return cnt;
+// }
