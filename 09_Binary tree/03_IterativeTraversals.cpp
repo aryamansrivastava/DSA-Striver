@@ -81,11 +81,14 @@ vector<int> iterativeInOrder(Node* root) {
 
     stack<Node *> st;
     while(1) {
+        // Traverse to the leftmost node while pushing nodes onto the stack
         if(root != NULL) {
             st.push(root);
             root = root->left;
         }
         else {
+            // If we have traversed the left subtree and reached a leaf node or NULL
+            // Pop a node from the stack, process it,
             if(st.empty()) break;
             root = st.top();
             st.pop();
@@ -96,7 +99,7 @@ vector<int> iterativeInOrder(Node* root) {
     return inOrder;
 }
 
-// using 1 Stack
+// PostOrder Using 1 Stack
 vector<int> iterativePostOrder(Node* root) {
     vector<int> postOrder;
     if(root == NULL) return postOrder;

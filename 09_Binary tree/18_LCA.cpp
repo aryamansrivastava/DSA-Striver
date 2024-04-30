@@ -20,6 +20,7 @@
 //     / \
 //    6   7
 
+
 // LCA(4, 7) = 2
 // LCA(5, 9) = 1
 // LCA(2, 6) = 2
@@ -54,8 +55,6 @@ class Node {
         }
 };
 
-// Striver's Approach
-
 bool getPath(Node* root, int x, vector<int> &path) {
     if(root == NULL) return 0;
 
@@ -71,24 +70,23 @@ bool getPath(Node* root, int x, vector<int> &path) {
     return 0;
 }
 
-// My Approach
+// Method 2: Optimization Approach
+// Time Complexity: O(n)
+// Reason: As we traverse all the node of tree.
 
-// bool getPath(Node* root, int x, vector<int> &path) {
-//     if(root == NULL) return 0;
+// Space Complexity: O(h)
+// Where h = height of tree
 
-//     if(root->data == x) {
-//         path.push_back(root->data);
-//         return 1;
-//     }
-//     bool left = getPath(root->left, x, path);
-//     bool right = getPath(root->right, x, path);
+Node* lca(Node* root, int x, int y) {
+    if(root == NULL || root->data == x || root->data == y) return root;
 
-//     if(left || right) {
-//         path.push_back(root->data);
-//         return 1;
-//     }
-//     return 0;
-// }
+    Node* left = lca(root->left, x, y);
+    Node* right = lca(root->right, x, y);
+
+    if(left == NULL) return right;
+    else if(right == NULL) return left;
+    else return root;  // Return the root if both left and right are not NULL
+}
 
 int main(){
     Node* root = new Node(1);
@@ -102,19 +100,21 @@ int main(){
     root->left->right->right = new Node(7);
 
     int x = 4, y = 7;
-    vector<int> path1, path2;
-    getPath(root, x, path1);
-    // Uncomment below line if using My Approach
-    // reverse(path1.begin(), path1.end());
-    getPath(root, y, path2);
-    // Uncomment below line if using My Approach
-    // reverse(path2.begin(), path2.end());
-    int lca;
-    for (int i = 0; i < min(path1.size(), path2.size()); i++)
-    {
-        if(path1[i] == path2[i]) lca = path1[i];
-        else break;
-    }
-    cout << "lca(" << x << ", "<< y << "): " << lca << endl;
+
+    // For Brute Force Approach
+    // vector<int> path1, path2;
+    // getPath(root, x, path1);
+    // getPath(root, y, path2);
+
+    // int lca;  // In leetcode we have to return node so there lca is treated as node
+    // for (int i = 0; i < min(path1.size(), path2.size()); i++)
+    // {
+    //     if(path1[i] == path2[i]) lca = path1[i];
+    //     else break;
+    // }
+    // cout << "lca(" << x << ", "<< y << "): " << lca << endl;
+
+    // For Optimised Approach
+    cout << "lca(" << x << ", "<< y << "): " << lca(root, x, y)->data << endl;
     return 0;
 }
